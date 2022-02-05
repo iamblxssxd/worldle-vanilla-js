@@ -2,7 +2,20 @@ const tileDisplay = document.querySelector(".tile-container");
 const keyboard = document.querySelector(".key-container");
 const messageDisplay = document.querySelector(".message-container");
 
-const wordle = "SUPER";
+let wordle;
+
+const getWordle = () => {
+  fetch("http://localhost:8000/word")
+    .then((response) =>
+      response.json().then((json) => {
+        console.log(json);
+        wordle = json.toUpperCase();
+      })
+    )
+    .catch((err) => console.log(err));
+};
+
+getWordle();
 
 const keys = [
   "Q",
@@ -180,6 +193,6 @@ const flipTile = () => {
       tile.classList.add("flip");
       tile.classList.add(guess[index].color);
       addColorToKey(guess[index].letter, guess[index].color);
-    }, 500 * index);
+    }, 350 * index);
   });
 };
